@@ -1,0 +1,28 @@
+Metadata:
+  StackName: "cost-explorer-cloudformation"
+  Tags:
+    application: "aws-cost-extractor"
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+    CostExplorerIAMRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: "cost-explorer-iam-role"
+        AssumeRolePolicyDocument:
+          Statement:
+            - Action:
+                - sts:AssumeRole
+              Effect: Allow
+              Principal:
+                Service:
+                  - ec2.amazonaws.com
+        Path: /
+        Policies:
+          - PolicyDocument:
+              Statement:
+                - Action:
+                    - "ce:GetCostAndUsage"
+                  Effect: Allow
+                  Resource: "*"
+                  Sid: AllowCostExplorerReadApis
+            PolicyName: AllowCostExplorerReadApis

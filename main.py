@@ -13,10 +13,11 @@ def get_arn(account_id, role_name):
 
 def assume_aws_role(role_name, account_id):
     current_account_id = boto3.client("sts").get_caller_identity().get("Account")
-    if current_account_id == account_id:
-        LOGGER.debug("No need to assume already assumed role")
+    current_role_name = boto3.client("sts").get_caller_identity().get("Arn").split('/')[1]
+    if current_account_id == account_id and current_role_name == 'cost-explorer-iam-role':
+        LOGGER.debug("No need to assume, already assumed role")
         return boto3.Session()
-    LOGGER.debug("Assuming AWS Billing role in zalando aws account")
+    LOGGER.debug("Assuming AWS cost-explorer role in AWS account")
     session_name = f"pinfra-{datetime.now().strftime('%Y-%m-%dT%H-%M-%S')}"
     assumed_credentials = boto3.client("sts").assume_role(
         RoleArn=get_arn(account_id, role_name), RoleSessionName=session_name

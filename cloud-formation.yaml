@@ -16,6 +16,12 @@ Resources:
               Principal:
                 Service:
                   - ec2.amazonaws.com
+            - Effect: Allow
+              Principal:
+                # change the account id as per your account if you need another user/role to assume this role
+                AWS: 'arn:aws:iam::1234567890:user/test'
+              Action:
+                - sts:AssumeRole
         Path: /
         Policies:
           - PolicyDocument:

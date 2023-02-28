@@ -32,8 +32,17 @@ curl http://localhost:8001/services-cost\?account\=00123456789`
 ```
 ## Local setup
 To run this application on local by doing the following steps:
-* Create a AWS role in your AWS as per this [cloudformation template](https://github.com/neerajtiwar/aws-cost-exporter/blob/main/cloud-formation.yaml)
-* Login with a AWS IAM user and assume the IAM role we created in the first step, using following:
+* Create AWS role in your AWS as per this [cloudformation template](https://github.com/neerajtiwar/aws-cost-exporter/blob/main/cloud-formation.yaml)
+* Login with AWS IAM user that you have given permission in the first step to assume this role and assume the IAM role we created in the first step, using following:
 ```bash
-aws sts assume-role --role-arn "arn:aws:iam::002474742307:role/cost-explorer-iam-role" --role-session-name AWSCLI-Session
+aws sts assume-role --role-arn "arn:aws:iam::1234567890:role/cost-explorer-iam-role" --role-session-name AWSCLI-Session
 ```
+* Now, in the terminal run the python program:
+```bash
+# gunicorn --workers 1 --timeout 300 --bind 0.0.0.0:8001 --log-file=-  main:app main.py
+[2023-02-28 22:04:59 +0100] [27676] [INFO] Starting gunicorn 20.1.0
+[2023-02-28 22:04:59 +0100] [27676] [INFO] Listening at: http://0.0.0.0:8001 (27676)
+[2023-02-28 22:04:59 +0100] [27676] [INFO] Using worker: sync
+[2023-02-28 22:04:59 +0100] [27677] [INFO] Booting worker with pid: 27677
+```
+* You will now be able to run the [curl commands](https://github.com/neerajtiwar/aws-cost-exporter#how-it-works) given in the initial documentation to fetch the total-costs and services-costs

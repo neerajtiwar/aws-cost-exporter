@@ -46,3 +46,6 @@ aws sts assume-role --role-arn "arn:aws:iam::1234567890:role/cost-explorer-iam-r
 [2023-02-28 22:04:59 +0100] [27677] [INFO] Booting worker with pid: 27677
 ```
 * You will now be able to run the [curl commands](https://github.com/neerajtiwar/aws-cost-exporter#how-it-works) given in the initial documentation to fetch the total-costs and services-costs
+
+## How to contribute
+If you see any mistakes or want to improve something, feel free to create a PR OR create issues if something is not working.
